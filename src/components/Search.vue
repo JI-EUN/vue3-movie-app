@@ -5,6 +5,7 @@
         type="text" 
         placeholder="Search for Movies, Series & more"
         class="form-control"
+        @keyup.enter="apply"
         />
 
         <div class="selects">
@@ -20,10 +21,13 @@
                 <option v-for="item in filter.items" :key="item">{{item}}</option>
             </select>
         </div>
+
+        <button class="btn btn-primary" @click="apply">Apply</button>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data(){
         return{
@@ -53,6 +57,14 @@ export default {
                 }
             ]
         }
+    },
+    methods: {
+        async apply(){
+            //Search movies
+            const OMD_API_KEY = '7035c60c'
+            const res = await axios.get(`https://www.omdbapi.com/?apikey=${OMD_API_KEY}&s=${this.title}&type=${this.type}&y=${this.year}&page=1`)
+            console.log(res)
+        }
     }
 }
 </script>
@@ -76,6 +88,12 @@ export default {
                 margin-right:0;
             }
         }
+    }
+    .btn{
+        width:120px;
+        height: 50px;
+        font-weight: 700;
+        flex-shrink: 0;
     }
 }
 </style>
