@@ -1,5 +1,5 @@
 <template>
-    <div class="movie" :style="{backgroundImage:`url(${movie.Poster})`}">
+    <RouterLink :to="`/movie/${movie.imdbID}`" class="movie" :style="{backgroundImage:`url(${movie.Poster})`}">
         <Loader v-if="imgLoading" :size="1.5" absolute/>
         <div class="info">
             <div class="year">
@@ -9,7 +9,7 @@
                 {{movie.Title}}
             </div>
         </div>
-    </div>
+    </RouterLink>
 </template>
 
 <script>
@@ -36,14 +36,18 @@ export default {
     },
     methods:{
         async init(){
-            await this.$loadImage(this.movie.Poster)
-            this.imgLoading = false
+            const poster = this.movie.Poster
+            if(!poster || poster ==='N/A'){
+                this.imgLoading = false
+            }else{  
+                await this.$loadImage(poster)
+                this.imgLoading = false
+            }
         }
     }
 }
 </script>
 <style lang="scss" scoped>
-@import "~/scss/main";
 .movie{
     $width:200px;
     width:$width;

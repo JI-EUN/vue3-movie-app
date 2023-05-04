@@ -1,1 +1,9 @@
-//개발 or 사용자 정보
+export default {
+  namespaced: true,
+  state: () => ({
+    name: "ZingZZi",
+    email: "pangdoa.merry@gmail.com",
+    phone: "010.1111.2222",
+    image: "https://heropy.blog/css/images/logo.png",
+  }),
+};
